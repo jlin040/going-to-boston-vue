@@ -2,22 +2,22 @@
 <html lang="en">
 <head>
   
-  <link rel="stylesheet" type="text/css" href="css/styles.css">
+<!-- <link rel="stylesheet" type="text/css" href="css/styles.css"> -->
 </head>
 <body>
-  <div class="container">
+  <div id="app">
     <h1>Dice Game</h1>
 
-    <button onclick="startGame()">Start / Restart Game</button>
-    <button id="rollDiceBtn" onclick="rollDice()" disabled>Roll Dice</button>
+    <div v-show="!playing"><button v-on:click="startGame()">Start / Restart Game</button></div>
+    <div v-show="playing"><button id="rollDiceBtn" >Roll Dice</button></div>
 
     <div id="Dice">
-      <p><span id="die0">0</span></p>
-      <p><span id="die1">0</span></p>
-      <p><span id="die2">0</span></p>
-    </div>
+      <p>Dice 1: {{ dice1 }}</p>
+      <p>Dice 2: {{ dice2 }}</p>
+      <p>Dice 3: {{ dice3 }}</p>
+    </div> <br/>
 
-    <div id="scoreInfo">
+    <!-- <div id="scoreInfo">
       <p>Player 1 Score: <span id="p1score">0</span></p>
       <p>Player 1 Rounds Won: <span id="p1rounds">0</span></p>
       <p>Player 2 Score: <span id="p2score">0</span></p>
@@ -28,10 +28,10 @@
       <p>Current Round: <span id="currentRound">1</span></p>
       <p>Total Rounds: <span id="totalRounds">0</span></p>
       <p>Current Player: <span id="currentPlayer">0</span></p>
-    </div>
+    </div> -->
 
   </div>
 
-  <script src="script.js"></script>
+  <script type="module" src="script.js"></script>
 </body>
 </html>

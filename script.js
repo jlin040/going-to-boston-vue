@@ -16,13 +16,18 @@ const app = createApp({
   },
   methods: {
     startGame() {
-      if (this.maxRounds === "") {
-        alert("Please set the number of rounds.");
-      } else {
-        this.playing = true;
-        this.rollDice();
-      }
-    },
+        if (this.maxRounds === "") {
+          alert("Please set the number of rounds.");
+        } else {
+          const rounds = parseInt(this.maxRounds);
+          if (rounds % 2 === 0) {
+            alert("Please enter an odd number of rounds.");
+          } else {
+            this.playing = true;
+            this.rollDice();
+          }
+        }
+      },
     reset() {
       this.playing = false;
       this.maxRounds = "";
@@ -60,6 +65,7 @@ const app = createApp({
       this.currentPlayer = 3 - this.currentPlayer;
 
       this.currentRound++;
+
 
       if (this.currentRound > this.maxRounds) {
         this.playing = false;

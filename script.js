@@ -4,14 +4,28 @@ const app = createApp({
     data() {
         return {
             playing: false,
-            dice1: 0,
-            dice2: 0,
-            dice3: 0,
+            maxRounds: "",
+            die: [],
+            currentRound: 1
         };
     },
     methods: {
         startGame() {
-            this.playing = true;
+            if (this.maxRounds == "") alert("please set amount of rounds")
+            else {
+                this.playing = true;
+            }
+        },
+        reset() {
+            this.playing = false;
+            this.maxRounds = "";
+            this.dice1 = "";
+            this.dice2 = "";
+            this.dice3 = "";
+            this.currentRound = 1;
+        },
+        odd() {
+            if (this.maxRounds % 2 == 0) this.maxRounds++
         },
         rollDice() {
 

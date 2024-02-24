@@ -1,36 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel="stylesheet" type="text/css" href="css/styles.css">
+  <!-- <link rel="stylesheet" type="text/css" href="css/styles.css"> -->
 </head>
 <body>
   <div id="app" class="container">
     <h1>Dice Game</h1>
-
-    <button @click="startGame">Start / Restart Game</button>
-    <button id="rollDiceBtn" @click="rollDice" :disabled="!gameStarted">Roll Dice</button>
-
-    <div id="Dice">
-      <p><span>{{ die[0] }}</span></p>
-      <p><span>{{ die[1] }}</span></p>
-      <p><span>{{ die[2] }}</span></p>
+    <div v-show="!playing">
+      <input type="number" id="roundSetter" v-on:blur="odd" v-model="maxRounds" placeholder="# of rounds"/><br/>
+      <button id="startBtn" @click="startGame">Start</button>
     </div>
 
-    <div id="scoreInfo">
-      <p>Player 1 Score: <span>{{ p1score }}</span></p>
-      <p>Player 1 Rounds Won: <span>{{ p1rounds }}</span></p>
-      <p>Player 2 Score: <span>{{ p2score }}</span></p>
-      <p>Player 2 Rounds Won: <span>{{ p2rounds }}</span></p>
+    <div v-show="playing">
+      <button id="rollBtn" @click="rollDice">Roll Dice</button>
+    </div>
+    <button @click="reset">Reset</button>
+
+    <div id="game" v-show="playing">
+      <div id="Dice">
+        <p><span>{{ die[0] }}</span></p>
+        <p><span>{{ die[1] }}</span></p>
+        <p><span>{{ die[2] }}</span></p>
+      </div>
+
+      <div id="scoreInfo">
+        <p>Player 1 Score: <span>{{ p1score }}</span></p>
+        <p>Player 1 Rounds Won: <span>{{ p1rounds }}</span></p>
+        <p>Player 2 Score: <span>{{ p2score }}</span></p>
+        <p>Player 2 Rounds Won: <span>{{ p2rounds }}</span></p>
+      </div>
+
+      <div id="roundInfo">
+        <p>Current Round: <span>{{ currentRound }}</span></p>
+        <p>Total Rounds: <span>{{ maxRounds }}</span></p>
+        <p>Current Player: <span>{{ currentPlayer }}</span></p>
+      </div>
     </div>
 
-    <div id="roundInfo">
-      <p>Current Round: <span>{{ currentRound }}</span></p>
-      <p>Total Rounds: <span>{{ totalRounds }}</span></p>
-      <p>Current Player: <span>{{ currentPlayer }}</span></p>
-    </div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
-  <script src="script.js"></script>
+  <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2"></script> -->
+  <script type="module" src="script.js"></script>
 </body>
 </html>

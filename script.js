@@ -79,15 +79,28 @@ const app = createApp({
       this.currentPlayer = 3 - this.currentPlayer;
     },
     checkWinner() {
-      if (this.currentRound == this.maxRounds || this.checkMajority(this.p1rounds) || this.checkMajority(this.p2rounds) ) {
-        // console.log("checking")
+      if (this.currentRound == this.maxRounds || this.checkMajority(this.p1rounds) || this.checkMajority(this.p2rounds)) {
         this.winnerDetermined = true;
         this.playing = false;
-        console.log("winner determined");
-        if (this.p1rounds > this.p2rounds) this.winner = "Player 1";
-        else this.winner = "Player 2";
+    
+        if (this.p1rounds > this.p2rounds) {
+          this.winner = "Player 1";
+        } else if (this.p2rounds > this.p1rounds) {
+          this.winner = "Player 2";
+        } else {
+          while (this.p1score === this.p2score) {
+            this.rollDice();
+          }
+    
+          if (this.p1score > this.p2score) {
+            this.winner = "Player 1";
+          } else {
+            this.winner = "Player 2";
+          }
+        }
       }
     },
+
     checkMajority(a) {
       console.log("checking" + a)
       if (a > this.maxRounds / 2) {

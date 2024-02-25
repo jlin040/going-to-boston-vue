@@ -12,20 +12,18 @@ const app = createApp({
       p1rounds: 0,
       p2score: 0,
       p2rounds: 0,
+      roundOver: false,
+      winner: "",
+      winnerDetermined: false
     };
   },
   methods: {
     startGame() {
         if (this.maxRounds === "") {
           alert("Please set the number of rounds.");
-        } else {
-          const rounds = parseInt(this.maxRounds);
-          if (rounds % 2 === 0) {
-            alert("Please enter an odd number of rounds.");
-          } else {
-            this.playing = true;
-            this.rollDice();
-          }
+        } 
+        else {
+          this.playing = true;
         }
       },
     reset() {
@@ -38,8 +36,23 @@ const app = createApp({
       this.p1rounds = 0;
       this.p2score = 0;
       this.p2rounds = 0;
+      this.roundOver = false,
+      this.winner = "",
+      this.winnerDetermined = false
+    },
+    checkOdd() { 
+      if (this.maxRounds % 2 == 0) this.maxRounds++
     },
     rollDice() {
+      if (this.roundOver) {
+        this.checkWinner();
+        this.currentRound++
+        this.roundOver = false
+        this.p1score = 0
+        this.p2score = 0
+        return
+      }
+
       this.die = [
         Math.floor(Math.random() * 6) + 1,
         Math.floor(Math.random() * 6) + 1,
@@ -54,23 +67,35 @@ const app = createApp({
       }
 
 
-      if (this.currentRound % 2 === 0) {
+      if (this.currentPlayer === 2) {
         if (this.p1score > this.p2score) {
           this.p1rounds++;
         } else {
           this.p2rounds++;
         }
+        this.roundOver = true;
       }
 
       this.currentPlayer = 3 - this.currentPlayer;
-
-      this.currentRound++;
-
-
-      if (this.currentRound > this.maxRounds) {
+    },
+    checkWinner() {
+      if (this.currentRound == this.maxRounds || this.checkMajority(this.p1rounds) || this.checkMajority(this.p2rounds) ) {
+        // console.log("checking")
+        this.winnerDetermined = true;
         this.playing = false;
+        console.log("winner determined");
+        if (this.p1rounds > this.p2rounds) this.winner = "Player 1";
+        else this.winner = "Player 2";
       }
     },
+    checkMajority(a) {
+      console.log("checking" + a)
+      if (a > this.maxRounds / 2) {
+        console.log(`majority: ${a}`)
+        return true
+      }
+      else return false
+    }
   },
 });
 

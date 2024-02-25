@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- <link rel="stylesheet" type="text/css" href="css/styles.css"> -->
+  <link rel="stylesheet" type="text/css" href="css/styles.css">
 </head>
 <body>
   <div id="app" class="container">
     <h1>Dice Game</h1>
-    <div v-show="!playing">
-      <input type="number" id="roundSetter" v-on:blur="odd" v-model="maxRounds" placeholder="# of rounds"/><br/>
+    <div v-show="!playing && !winnerDetermined">
+      <input type="number" id="roundSetter" v-on:blur="checkOdd" v-model="maxRounds" placeholder="# of rounds"/><br/>
       <button id="startBtn" @click="startGame">Start</button>
     </div>
 
@@ -35,6 +35,10 @@
         <p>Total Rounds: <span>{{ maxRounds }}</span></p>
         <p>Current Player: <span>{{ currentPlayer }}</span></p>
       </div>
+    </div>
+
+    <div id="winnerScreen" v-show="winnerDetermined">
+      <h1>The winner is {{winner}}!</h1>
     </div>
 
   </div>

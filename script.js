@@ -3,6 +3,10 @@ import { createApp, ref } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
 const app = createApp({
   data() {
     return {
+      firstPlayer: 1,
+      p1die: "",
+      p2die: "",
+      firstDetermined: false,
       playing: false,
       maxRounds: "",
       die: [0, 0, 0],
@@ -58,6 +62,13 @@ const app = createApp({
         Math.floor(Math.random() * 6) + 1,
         Math.floor(Math.random() * 6) + 1,
       ];
+      
+      // testing tie
+      // this.die = [
+      //   Math.floor(Math.random() * 2) + 1,
+      //   Math.floor(Math.random() * 2) + 1,
+      //   Math.floor(Math.random() * 2) + 1,
+      // ];
 
 
       if (this.currentPlayer === 1) {
@@ -67,11 +78,15 @@ const app = createApp({
       }
 
 
-      if (this.currentPlayer === 2) {
+
+      if (this.currentPlayer !== this.firstPlayer) {
         if (this.p1score > this.p2score) {
           this.p1rounds++;
-        } else {
+        } else  if (this.p2score > this.p1score) {
           this.p2rounds++;
+        } else {
+          this.tieBreak()
+          return
         }
         this.roundOver = true;
       }
@@ -87,20 +102,9 @@ const app = createApp({
           this.winner = "Player 1";
         } else if (this.p2rounds > this.p1rounds) {
           this.winner = "Player 2";
-        } else {
-          while (this.p1score === this.p2score) {
-            this.rollDice();
-          }
-    
-          if (this.p1score > this.p2score) {
-            this.winner = "Player 1";
-          } else {
-            this.winner = "Player 2";
-          }
         }
       }
     },
-
     checkMajority(a) {
       console.log("checking" + a)
       if (a > this.maxRounds / 2) {
@@ -108,6 +112,20 @@ const app = createApp({
         return true
       }
       else return false
+    },
+    tieBreak() {
+      alert("breaking tie")
+      // this.p1score = 0
+      // this.p2score = 0
+      this.currentPlayer = this.firstPlayer
+      this.rollDice()
+    },
+    chooseFirst() {
+      this.p1die = Math.floor(Math.random() * 6) + 1
+      this.p2die = Math.floor(Math.random() * 6) + 1
+    },
+    confirmStart() {
+      this.firstDetermined = true
     }
   },
 });

@@ -11,7 +11,13 @@
       <button id="startBtn" @click="startGame">Start</button>
     </div>
 
-    <div v-show="playing">
+    <div v-show="playing && !firstDetermined">
+      <p>Player 1: {{ p1die }}</p>
+      <p>Player 2: {{ p2die }}</p>
+      <button id="chooseFirst" @click="chooseFirst">Roll for first Player</button>
+    </div>
+
+    <div v-show="playing && firstDetermined">
       <button id="rollBtn" @click="rollDice">Roll Dice</button>
     </div>
     <button @click="reset">Reset</button>

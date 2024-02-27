@@ -120,9 +120,24 @@ const app = createApp({
       this.currentPlayer = this.firstPlayer
       this.rollDice()
     },
+    tieBreak1() {
+      alert("breaking tie")
+      // this.p1score = 0
+      // this.p2score = 0
+      this.chooseFirst()
+      return
+    },
     chooseFirst() {
       this.p1die = Math.floor(Math.random() * 6) + 1
       this.p2die = Math.floor(Math.random() * 6) + 1
+      if (this.p1die > this.p2die) {
+        this.firstPlayer = 1;
+      } else  if (this.p2die > this.p1die) {
+        this.firstPlayer = 2 ;
+      } else {
+        this.tieBreak1()
+        return
+      }
     },
     confirmStart() {
       this.firstDetermined = true

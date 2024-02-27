@@ -132,12 +132,17 @@ const app = createApp({
       this.p2die = Math.floor(Math.random() * 6) + 1
       if (this.p1die > this.p2die) {
         this.firstPlayer = 1;
+        this.confirmStart;
+        alert("player 1 start")
       } else  if (this.p2die > this.p1die) {
         this.firstPlayer = 2 ;
+        this.confirmStart;
+        alert("player 2 start")
       } else {
         this.tieBreak1()
         return
       }
+      
     },
     confirmStart() {
       this.firstDetermined = true

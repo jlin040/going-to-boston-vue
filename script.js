@@ -31,6 +31,10 @@ const app = createApp({
         }
       },
     reset() {
+      this.firstPlayer= 1,
+      this.p1die= "",
+      this.p2die= "",
+      this.firstDetermined= false,
       this.playing = false;
       this.maxRounds = "";
       this.die = [0, 0, 0];
@@ -43,6 +47,7 @@ const app = createApp({
       this.roundOver = false,
       this.winner = "",
       this.winnerDetermined = false
+      
     },
     checkOdd() { 
       if (this.maxRounds % 2 == 0) this.maxRounds++
@@ -115,8 +120,8 @@ const app = createApp({
     },
     tieBreak() {
       alert("breaking tie")
-      // this.p1score = 0
-      // this.p2score = 0
+      this.p1score = 0
+      this.p2score = 0
       this.currentPlayer = this.firstPlayer
       this.rollDice()
     },
@@ -132,21 +137,18 @@ const app = createApp({
       this.p2die = Math.floor(Math.random() * 6) + 1
       if (this.p1die > this.p2die) {
         this.firstPlayer = 1;
-        this.confirmStart;
-        alert("player 1 start")
+        alert("player 1 start");
       } else  if (this.p2die > this.p1die) {
         this.firstPlayer = 2 ;
-        this.confirmStart;
-        alert("player 2 start")
+        alert("player 2 start");
       } else {
         this.tieBreak1()
         return
       }
-      
+      this.currentPlayer = this.firstPlayer;
+      this.firstDetermined = true;
     },
-    confirmStart() {
-      this.firstDetermined = true
-    }
+    
   },
 });
 

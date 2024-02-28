@@ -148,6 +148,9 @@ const app = createApp({
       alert("breaking tie")
       this.p1score = 0
       this.p2score = 0
+      this.dieCount = 3
+      this.highest = 0;
+      this.die = [0, 0, 0];
       this.currentPlayer = this.firstPlayer
       this.rollDice()
     },

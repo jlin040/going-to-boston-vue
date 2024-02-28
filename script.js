@@ -150,6 +150,7 @@ const app = createApp({
       this.p2score = 0
       this.dieCount = 3
       this.highest = 0;
+      this.total = 0;
       this.die = [0, 0, 0];
       this.currentPlayer = this.firstPlayer
       this.rollDice()

@@ -12,11 +12,12 @@
     </div>
 
     <div v-show="playing && !firstDetermined">
-      <p>Player 1: {{ p1die }}</p>
-      <p>Player 2: {{ p2die }}</p>
+      <p>Player 1: {{ p1die !== "" ? p1die : "Roll the dice" }}</p>
+      <p>Player 2: {{ p2die !== "" ? p2die : "Roll the dice" }}</p>
       <button id="chooseFirst" @click="chooseFirst">Roll for first Player</button>
     </div>
-
+    
+    
     <div v-show="playing && firstDetermined">
       <button id="rollBtn" @click="rollDice">Roll Dice</button>
     </div>

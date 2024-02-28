@@ -133,21 +133,24 @@ const app = createApp({
       return
     },
     chooseFirst() {
-      this.p1die = Math.floor(Math.random() * 6) + 1
-      this.p2die = Math.floor(Math.random() * 6) + 1
+      this.p1die = Math.floor(Math.random() * 6) + 1;
+      this.p2die = Math.floor(Math.random() * 6) + 1;
+    
       if (this.p1die > this.p2die) {
         this.firstPlayer = 1;
-        alert("player 1 start");
-      } else  if (this.p2die > this.p1die) {
-        this.firstPlayer = 2 ;
-        alert("player 2 start");
+        alert(`Player 1 starts with a roll of ${this.p1die} vs ${this.p2die}`);
+      } else if (this.p2die > this.p1die) {
+        this.firstPlayer = 2;
+        alert(`Player 2 starts with a roll of ${this.p2die} vs ${this.p1die}`);
       } else {
-        this.tieBreak1()
-        return
+        this.tieBreak1();
+        return;
       }
+    
       this.currentPlayer = this.firstPlayer;
       this.firstDetermined = true;
     },
+    
     
   },
 });

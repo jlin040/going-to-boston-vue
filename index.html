@@ -25,9 +25,11 @@
 
     <div id="game" v-show="playing">
       <div id="Dice">
-        <p><span>{{ die[0] }}</span></p>
-        <p><span>{{ die[1] }}</span></p>
-        <p><span>{{ die[2] }}</span></p>
+        <h1><span>{{ die[0] }}</span></h1>
+        <div v-show="dieCount === 2"> <h1>|</h1> </div>
+        <h1><span>{{ die[1] }}</span></h1>
+        <div v-show="dieCount === 1"> <h1>|</h1> </div>
+        <h1><span>{{ die[2] }}</span></h1>
       </div>
 
       <div id="scoreInfo">

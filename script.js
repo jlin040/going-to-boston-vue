@@ -8,7 +8,11 @@ const app = createApp({
       p2die: "",
       firstDetermined: false,
       playing: false,
+      pause: false,
       maxRounds: "",
+      dieCount: 3,
+      total: 0,
+      highest: 0,
       die: [0, 0, 0],
       currentRound: 1,
       currentPlayer: 1,
@@ -36,7 +40,11 @@ const app = createApp({
       this.p2die= "",
       this.firstDetermined= false,
       this.playing = false;
+      this.pause = false;
       this.maxRounds = "";
+      this.dieCount = 3;
+      this.total = 0;
+      this.highest = 0;
       this.die = [0, 0, 0];
       this.currentRound = 1;
       this.currentPlayer = 1;
@@ -53,6 +61,43 @@ const app = createApp({
       if (this.maxRounds % 2 == 0) this.maxRounds++
     },
     rollDice() {
+      if (this.pause) this.unpause()
+      else {
+        this.handleRoundStart()
+        console.log("die count is" + this.dieCount)
+
+        let start = 3 - this.dieCount
+
+        for (let i = start; i < 3; i++) {
+          let a = this.roll()
+          console.log(a)
+          this.die[i] = a
+          if (this.die[i] > this.highest) this.highest = this.die[i]
+        }
+        this.total += this.highest;
+
+        if (this.dieCount === 1) {
+          if (this.currentPlayer === 1) {
+            this.p1score += this.total;
+          } else {
+            this.p2score += this.total;
+          }
+          this.handleRoundEnd()
+          return
+        }
+        this.pause = true;
+      }
+    },
+    unpause() {
+      this.die[3 - this.dieCount] = this.highest;
+      this.dieCount--
+      this.pause = false
+      this.highest = 0;
+    },
+    roll() {
+      return Math.floor(Math.random() * 6) + 1;
+    },
+    handleRoundStart() {
       if (this.roundOver) {
         this.checkWinner();
         this.currentRound++
@@ -61,29 +106,8 @@ const app = createApp({
         this.p2score = 0
         return
       }
-
-      this.die = [
-        Math.floor(Math.random() * 6) + 1,
-        Math.floor(Math.random() * 6) + 1,
-        Math.floor(Math.random() * 6) + 1,
-      ];
-      
-      // testing tie
-      // this.die = [
-      //   Math.floor(Math.random() * 2) + 1,
-      //   Math.floor(Math.random() * 2) + 1,
-      //   Math.floor(Math.random() * 2) + 1,
-      // ];
-
-
-      if (this.currentPlayer === 1) {
-        this.p1score += this.die.reduce((sum, value) => sum + value, 0);
-      } else {
-        this.p2score += this.die.reduce((sum, value) => sum + value, 0);
-      }
-
-
-
+    },
+    handleRoundEnd() {
       if (this.currentPlayer !== this.firstPlayer) {
         if (this.p1score > this.p2score) {
           this.p1rounds++;
@@ -97,6 +121,8 @@ const app = createApp({
       }
 
       this.currentPlayer = 3 - this.currentPlayer;
+      this.dieCount = 3
+      this.total = 0;
     },
     checkWinner() {
       if (this.currentRound == this.maxRounds || this.checkMajority(this.p1rounds) || this.checkMajority(this.p2rounds)) {
